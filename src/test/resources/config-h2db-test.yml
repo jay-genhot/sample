@@ -1,0 +1,35 @@
+jerseyClient:
+  timeout: 3s
+  connectionTimeout: 3s
+
+server:
+  applicationConnectors:
+    - type: http
+      port: 8080
+
+logging:
+  level: INFO
+  loggers:
+    "com.sun.jersey": INFO
+    "org.glassfish.jersey.filter.LoggingFilter": INFO
+  appenders:
+    - type: console
+
+database:
+  driverClass: org.h2.Driver
+  user: sa
+  password: sa
+  url: jdbc:h2:mem:test;MODE=MySQL;DB_CLOSE_ON_EXIT=TRUE;INIT=CREATE SCHEMA IF NOT EXISTS dbo
+
+  properties:
+    charSet: UTF-8
+    hibernate.dialect: org.hibernate.dialect.H2Dialect
+    hibernate.hbm2ddl.auto: create
+    hibernate.show_sql: false
+    hibernate.generate_statistics: false
+    org.hibernate.envers.audit_table_suffix: _aud
+    org.hibernate.envers.revision_field_name: rev
+    org.hibernate.envers.revision_type_field_name: revtype
+    org.hibernate.envers.modified_flag_suffix: _mod
+    validationQuery: SELECT * FROM INFORMATION_SCHEMA.SYSTEM_TABLES
+

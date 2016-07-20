@@ -1,0 +1,51 @@
+
+server:
+  applicationConnectors:
+    - type: http
+      port: 8080
+
+logging:
+  level: INFO
+  loggers:
+    "com.sun.jersey": INFO
+    "org.hibernate.SQL": INFO
+    "org.hibernate.pretty": INFO
+    "io.dropwizard.jersey.jackson.JsonProcessingExceptionMapper": INFO
+    "io.dropwizard": INFO
+
+database:
+  driverClass: com.mysql.jdbc.Driver
+  user: root
+  password:
+  url: jdbc:mysql://localhost:3306/sample?useUnicode=true&characterEncoding=UTF-8&rewriteBatchedStatements=true
+  properties:
+    charSet: UTF-8
+    hibernate.show_sql: false
+    hibernate.format_sql: false
+    hibernate.jdbc.batch_size: 1000
+    hibernate.hbm2ddl.auto: create
+    hibernate.order_inserts: true
+    hibernate.order_updates: true
+    hibernate.jdbc.batch_versioned_data: true
+    org.hibernate.envers.audit_table_suffix: _aud
+    org.hibernate.envers.revision_field_name: rev
+    org.hibernate.envers.revision_type_field_name: revtype
+    org.hibernate.envers.modified_flag_suffix: _mod
+
+
+  # the SQL query to run when validating a connection's liveness
+  validationQuery: "/* MyService Health Check */ SELECT 1"
+
+  # the maximum amount of time to wait on an empty pool before throwing an exception
+  maxWaitForConnection: 10s
+
+  initialSize: 2
+
+  # the minimum number of connections to keep open
+  minSize: 2
+
+  # the maximum number of connections to keep open
+  maxSize: 8
+
+  # whether or not idle connections should be validated
+  checkConnectionWhileIdle: true

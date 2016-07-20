@@ -1,0 +1,61 @@
+
+server:
+  applicationConnectors:
+    - type: https
+      port: 443
+      keyStorePath: dabih.keystore
+      keyStorePassword: trinnvis
+      validateCerts: false
+  requestLog:
+    appenders:
+      - type: syslog
+        host: logs.papertrailapp.com
+        port: 24570
+        facility: user
+        threshold: ALL
+
+logging:
+  level: INFO
+  loggers:
+      "io.dropwizard.jersey.jackson.JsonProcessingExceptionMapper": DEBUG
+      "org.glassfish.jersey.filter.LoggingFilter": INFO
+  appenders:
+    - type: console
+    - type: syslog
+      host: logs.papertrailapp.com
+      port: 24570
+      facility: user
+      threshold: ALL
+      logFormat: "%X{Request-Tracker} %pid: [%thread] %logger %msg"
+
+database:
+  driverClass: com.mysql.jdbc.Driver
+  user: system
+  password: r997788s
+  url: jdbc:mysql://dabih.cybzazunmihm.eu-central-1.rds.amazonaws.com:3306/dabih?useUnicode=true&characterEncoding=UTF-8&rewriteBatchedStatements=true
+  properties:
+    charSet: UTF-8
+    hibernate.show_sql: false
+    hibernate.format_sql: false
+    hibernate.jdbc.batch_size: 1000
+    hibernate.hbm2ddl.auto: validate
+    hibernate.order_inserts: true
+    hibernate.order_updates: true
+    hibernate.jdbc.batch_versioned_data: true
+    hibernate.generate_statistics: false
+
+
+  # the SQL query to run when validating a connection's liveness
+  validationQuery: "/* MyService Health Check */ SELECT 1"
+
+  # the maximum amount of time to wait on an empty pool before throwing an exception
+  maxWaitForConnection: 1s
+
+  # the minimum number of connections to keep open
+  minSize: 8
+
+  # the maximum number of connections to keep open
+  maxSize: 32
+
+  # whether or not idle connections should be validated
+  checkConnectionWhileIdle: true
