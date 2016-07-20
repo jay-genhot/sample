@@ -58,12 +58,9 @@ public class DabihApiApplication extends Application<DabihApiConfiguration> {
     public void run(DabihApiConfiguration configuration,
         Environment environment) throws ClassNotFoundException {
         final DBIFactory factory = new DBIFactory();
-        final DBI jdbi = factory.build(environment, configuration.getDataSourceFactory(), "sample-database");
 
         final AccountDAO dao = new AccountDAO(hibernateBundle.getSessionFactory());
         final UserStore userStore = new UserDAO(hibernateBundle.getSessionFactory());
-
-        final TransferService transferDBService = new TransferService();
 
         configureCors(environment);
 
